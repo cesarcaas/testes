@@ -42,9 +42,18 @@ public class Reservation {
 		return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 	}
 	
-	public void updateDates(Date checkIn, Date checkOut) {
+	public String updateDates(Date checkIn, Date checkOut) {
+		Date now = new Date();
+		if(checkIn.before(now) || checkOut.before(now)) {
+			return "Error in reservation: datas a baixo da atual";
+		} 
+		if (!checkOut.after(checkIn)) {
+			return "Erro em reservation: A data final informada não é após inicial";
+		}
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;		
+		
+		return null;
 	}
 	
 	@Override
